@@ -32,7 +32,7 @@ python3 main.py
 
 - **Temperatura:** acepta `int`, `float` o texto (`"24.5C"`, `"31.2°C"`, `"41 ºC"`). Se contemplan los dos símbolos de grado (`°` U+00B0 y `º` U+00BA), que son caracteres distintos.
 - **Valores inválidos o ausentes:** la temperatura toma `0.0` (según la guía), y esos sensores también entran en el promedio y lo bajan. La ubicación faltante o vacía toma `"Área No Asignada"`.
-- **Fahrenheit:** se quita la unidad pero **no se convierte** a Celsius (por ejemplo, `"45°F"` queda en `45.0`). Es una limitación conocida.
+- **Fahrenheit:** se quita la unidad pero **no se convierte** a Celsius (por ejemplo, `"45°F"` queda en `45.0`). La conversión no está pedida en la consigna, y la guía indica únicamente remover el sufijo "F".
 - **Alertas:** un sensor está en alerta si su temperatura es **estrictamente mayor** que el umbral (30 °C en la demostración). El promedio se redondea a 2 decimales.
 
 ---
@@ -116,7 +116,7 @@ Abrir http://127.0.0.1:8000/. Django avisa sobre migraciones sin aplicar; se pue
 - **"Planta de mayor consumo"** se calcula por **consumo acumulado** de cada planta, no por el registro individual más alto. Los datos de prueba están armados para que ambos criterios den resultados distintos (Norte tiene el registro más alto; Sur, el mayor total), y hay un test que lo verifica.
 - **Emisiones:** `obtener_metricas_consumo()` llama a `calcular_emisiones_carbono()` en cada registro. Devuelve las emisiones por planta, el total global y la planta de mayor consumo.
 - **Funciones independientes de Django:** los cálculos viven en `utils/`, así se pueden testear sin levantar el servidor.
-- **Interfaz:** usa Bootstrap **6.0.0-alpha.1** desde CDN, elegido a propósito para probar la nueva versión. Algunas clases difieren de Bootstrap 5 (por ejemplo, `theme-success` en lugar de `table-success`). La fila de la planta de mayor consumo aparece resaltada.
+- **Interfaz:** usa Bootstrap **5.3** desde CDN, con tema claro. Resume los indicadores en tarjetas, resalta la planta de mayor consumo con color y una etiqueta, y muestra un mensaje cuando no hay registros (`{% empty %}`). Los valores ausentes se cubren con los filtros `default` y `default_if_none`.
 
 ---
 
@@ -133,7 +133,7 @@ La excepción acordada desde el inicio fue el ejercicio 3, donde la ayuda con Dj
 | **Ej. 3: `calcular_emisiones_carbono` y `obtener_metricas_consumo`** | Pistas y revisión (agrupar con un diccionario, inicializar variables, diseño de datos de prueba que distingan los dos criterios de "mayor consumo"). **Sin código escrito por la IA.** |
 | **Ej. 3: tests** | **Código escrito por la IA:** las clases `TestCalculoEmisiones`, `TestMetricasConsumo` y `TestVistaPanelSustentabilidad`, con la explicación de cada técnica (`assertAlmostEqual`, `assertRaises`, `setUp`, `patch`, cliente de pruebas de Django). La elección de los casos límite se discutió en conjunto. |
 | **Ej. 3: Django** | **Código parcial de la IA:** comandos de creación del proyecto y la app, esqueleto de la vista (el contexto lo completé yo), configuración de `urls.py` y esqueleto de la plantilla (las filas de la tabla las completé yo). También explicó los conceptos de Django en relación con FastAPI, que es lo que yo conocía. |
-| **Ej. 3: estilos con Bootstrap** | La elección de Bootstrap 6 alfa fue mía. La IA escribió la versión final de la plantilla con las clases de esa versión, a pedido mío, como mejora estética fuera de lo que pide la consigna. |
+| **Ej. 3: estilos con Bootstrap** | La elección de Bootstrap 5 fue mía. La IA escribió la versión final de la plantilla con las clases de esa versión, a pedido mío, como mejora estética fuera de lo que pide la consigna. |
 | **README** | Redactado por la IA a partir del código y de las decisiones tomadas durante el desarrollo, y revisado por mí. |
 
 Todas las decisiones de diseño (estructura de módulos, nombres, datos de prueba, manejo de errores, criterios de cálculo) fueron mías o se discutieron antes de implementarse.
